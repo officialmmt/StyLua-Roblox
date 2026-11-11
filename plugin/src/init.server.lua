@@ -92,7 +92,7 @@ function validateSettings(Module)
 		return false
 	end
 	local Settings
-	local ok, err = pcall(function()
+	local ok = pcall(function()
 		setfenv(result, {})
 		Settings = result()
 	end)
@@ -158,7 +158,7 @@ function openSettings()
 		return generateSettings()
 	end)
 	applySettings(Module)
-	plugin:OpenScript(Module)
+	ScriptEditorService:OpenScriptDocumentAsync(Module)
 end
 
 function fetchSettings()
@@ -226,25 +226,25 @@ function formatter(script: LuaSourceContainer)
 
 	local success, result = pcall(HttpService.RequestAsync, HttpService, {
 		Method = "POST" :: "POST",
-		Url = `http://127.0.0.1:18259/stylua?Config={encodedConfig}`,
+		Url = "http://127.0.0.1:18259/stylua?Config=" .. encodedConfig,
 		Headers = {
 			["Content-Type"] = "text/plain",
 		},
 		Body = currentSource,
 	})
 	if not success then
-		warn(`[StyLua] Connecting to server failed: {result}`)
+		warn("[StyLua] Connecting to server failed: " .. tostring(result))
 	elseif not result.Success then
 		local body = result.Body :: any
 		if typeof(body) == "string" and body:match("<!DOCTYPE html>") then
 			local preText = body:match("<pre>(.-)</pre>")
 			if preText then
-				warn(`[StyLua] {preText:gsub("&#39;", "'"):gsub("<br>", "\n")}`)
+				warn("[StyLua] " .. preText:gsub("&#39;", "'"):gsub("<br>", "\n"))
 			else
-				warn(`[StyLua] Request failed: {result.StatusCode} {result.StatusMessage}`)
+				warn("[StyLua] Request failed: " .. tostring(result.StatusCode) .. " " .. tostring(result.StatusMessage))
 			end
 		else
-			warn(`[StyLua] {body}`)
+			warn("[StyLua] " .. tostring(body))
 		end
 	else
 		if currentSource == result.Body then
@@ -293,3 +293,4 @@ plugin.Unloading:Connect(function()
 		Connection = nil
 	end
 end)
+

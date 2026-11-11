@@ -12,7 +12,6 @@
   "pkg": {
     "scripts": "index.js",
     "assets": [
-      "./node_modules/node-hide-console-window/build/Release/*",
       "./node_modules/trayicon/rsrcs/**",
       "./node_modules/@johnnymorganz/stylua/**",
       "./assets/**"
@@ -27,7 +26,6 @@
     "@johnnymorganz/stylua": "^2.6.0",
     "@yao-pkg/pkg": "^5.11.0",
     "express": "^4.21.2",
-    "node-hide-console-window": "^2.2.0",
     "patch-package": "^8.0.0",
     "trayicon": "^1.2.2"
   },

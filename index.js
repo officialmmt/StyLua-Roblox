@@ -5,13 +5,6 @@ const Tray = require("trayicon");
 const fs = require("fs");
 const path = require("path");
 
-let ConsoleWindow;
-try {
-  ConsoleWindow = require("node-hide-console-window");
-} catch (e) {
-  // Native addon could not be loaded (e.g. Node ABI mismatch inside standalone pkg)
-}
-
 // StyLua Roblox
 // Version 1.3.0
 
@@ -76,7 +69,7 @@ app.listen(18259, "127.0.0.1", () => {
 });
 
 process.on("uncaughtException", (err) => {
-  // Prevent background tray or native errors from crashing the HTTP server
+  // Prevent background tray or unhandled events from crashing the HTTP server
   console.error("Background error:", err && err.message ? err.message : err);
 });
 
@@ -105,17 +98,3 @@ try {
 } catch (trayErr) {
   // Tray is optional, server continues running even if tray fails
 }
-
-function hideConsoleWindow() {
-  if (ConsoleWindow && typeof ConsoleWindow.hideConsole === "function") {
-    try {
-      ConsoleWindow.hideConsole();
-      return;
-    } catch (e) {}
-  }
-}
-
-hideConsoleWindow();
-
-
-
