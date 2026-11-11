@@ -1,8 +1,24 @@
 <div align="center">
-<img src="./assets/icon.ico">
-<h1>
-StyLua Roblox
-</h1>
+  <div style="display:inline-block; background:#f4f4f4; padding:18px 28px 16px; width:min(100%, 980px); box-sizing:border-box;">
+    <h1 style="margin:0; font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size:clamp(4rem,9vw,15rem); font-weight:900; line-height:0.82; letter-spacing:-0.08em; color:#1f1f1f; text-transform:uppercase; text-shadow: 0 0 0 #1f1f1f, 6px 6px 0 rgba(0,0,0,0.08);">
+      <span style="display:inline-block; transform:skewX(-8deg);">StyLua</span>
+      <span style="display:inline-block; margin-left:0.12em; transform:skewX(-8deg);">Roblox</span>
+    </h1>
+  </div>
+
+  <div style="display:flex; justify-content:center; align-items:center; flex-wrap:wrap; gap:10px; margin-top:18px;">
+    <span style="display:inline-block; padding:6px 12px; border-radius:999px; background:#3f7fbf; color:#fff; font-weight:700; font-size:0.9rem; letter-spacing:0.02em;">release v2.3.0</span>
+    <span style="display:inline-block; padding:6px 12px; border-radius:999px; background:#d87a27; color:#fff; font-weight:700; font-size:0.9rem;">downloads 0</span>
+    <span style="display:inline-block; padding:6px 12px; border-radius:999px; background:#e26d32; color:#fff; font-weight:700; font-size:0.9rem;">license GPL-3.0</span>
+  </div>
+
+  <div style="display:flex; justify-content:center; flex-wrap:wrap; gap:8px; margin-top:12px;">
+    <span style="display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:6px; background:#dfe3e9; color:#1e2329; font-weight:600; font-size:0.9rem; border:1px solid rgba(28,33,38,0.18);">🪟 Windows</span>
+    <span style="display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:6px; background:#dfe3e9; color:#1e2329; font-weight:600; font-size:0.9rem; border:1px solid rgba(28,33,38,0.18);">🍎 macOS</span>
+    <span style="display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:6px; background:#dfe3e9; color:#1e2329; font-weight:600; font-size:0.9rem; border:1px solid rgba(28,33,38,0.18);">🐧 Linux x64</span>
+    <span style="display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:6px; background:#dfe3e9; color:#1e2329; font-weight:600; font-size:0.9rem; border:1px solid rgba(28,33,38,0.18);">🧩 LinuxArm64</span>
+    <span style="display:inline-flex; align-items:center; gap:8px; padding:6px 12px; border-radius:6px; background:#dfe3e9; color:#1e2329; font-weight:600; font-size:0.9rem; border:1px solid rgba(28,33,38,0.18);">📦 Package</span>
+  </div>
 </div>
 
 [StyLua](https://github.com/JohnnyMorganz/StyLua) roblox plugin is a formatter made for roblox studio.
