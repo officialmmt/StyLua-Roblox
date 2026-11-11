@@ -124,7 +124,7 @@ function applySettings(Module: ModuleScript)
 		Connection = nil
 	end
 	Connection = ScriptEditorService.TextDocumentDidChange:Connect(function(document)
-		if document:GetScript() ~= Module then
+		if (document:GetScript() :: any) ~= Module then
 			return
 		end
 		local NewSetting = validateSettings(Module)
