@@ -33,7 +33,7 @@ jobs:
 
       - name: Download global Roblox types
         shell: bash
-        run: curl -s -O https://raw.githubusercontent.com/JohnnyMorganz/luau-lsp/master/scripts/globalTypes.d.luau
+        run: curl -s -L -o globalTypes.d.luau https://raw.githubusercontent.com/JohnnyMorganz/luau-lsp/be1b5b3ee1754d39b33b59681d7a27519413b17a/scripts/globalTypes.d.luau
 
       - name: Run Luau Analyze
         run: luau-lsp analyze --sourcemap=sourcemap.json --defs=../globalTypes.d.luau --no-strict-dm-types src
