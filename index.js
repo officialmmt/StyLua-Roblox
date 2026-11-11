@@ -2,9 +2,15 @@ const express = require("express");
 const StyLua = require("@johnnymorganz/stylua");
 const app = express();
 const Tray = require("trayicon");
-const ConsoleWindow = require("node-hide-console-window");
 const fs = require("fs");
 const path = require("path");
+
+let ConsoleWindow;
+try {
+  ConsoleWindow = require("node-hide-console-window");
+} catch (e) {
+  // Native addon could not be loaded (e.g. Node ABI mismatch inside standalone pkg)
+}
 
 // StyLua Roblox
 // Version 1.3.0
@@ -69,17 +75,47 @@ app.listen(18259, "127.0.0.1", () => {
   console.log("Server started on 127.0.0.1:18259");
 });
 
-Tray.create(
-  {
-    icon: fs.readFileSync(
-      path.join(path.dirname(__filename), "assets/icon.ico")
-    ),
-    title: "StyLua",
-  },
-  function (tray) {
-    tray.setMenu(tray.item("Quit", () => process.exit(0)));
-  }
-);
+process.on("uncaughtException", (err) => {
+  // Prevent background tray or native errors from crashing the HTTP server
+  console.error("Background error:", err && err.message ? err.message : err);
+});
 
-ConsoleWindow.hideConsole();
+try {
+  const iconPath = path.join(path.dirname(__filename), "assets/icon.ico");
+  if (fs.existsSync(iconPath)) {
+    Tray.create(
+      {
+        icon: fs.readFileSync(iconPath),
+        title: "StyLua",
+      },
+      function (tray) {
+        if (tray && typeof tray.on === "function") {
+          tray.on("error", () => {});
+        }
+        tray.setMenu(tray.item("Quit", () => process.exit(0)));
+      }
+    )
+      .then((tray) => {
+        if (tray && typeof tray.on === "function") {
+          tray.on("error", () => {});
+        }
+      })
+      .catch(() => {});
+  }
+} catch (trayErr) {
+  // Tray is optional, server continues running even if tray fails
+}
+
+function hideConsoleWindow() {
+  if (ConsoleWindow && typeof ConsoleWindow.hideConsole === "function") {
+    try {
+      ConsoleWindow.hideConsole();
+      return;
+    } catch (e) {}
+  }
+}
+
+hideConsoleWindow();
+
+
 

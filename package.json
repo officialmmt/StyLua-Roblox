@@ -1,6 +1,6 @@
 {
   "name": "stylua-roblox-plugin",
-  "version": "1.0.0",
+  "version": "1.3.0",
   "description": "",
   "main": "index.js",
   "bin": "./index.js",
@@ -13,6 +13,8 @@
     "scripts": "index.js",
     "assets": [
       "./node_modules/node-hide-console-window/build/Release/*",
+      "./node_modules/trayicon/rsrcs/**",
+      "./node_modules/@johnnymorganz/stylua/**",
       "./assets/**"
     ],
     "outputPath": "out"
@@ -22,9 +24,9 @@
   "license": "ISC",
   "dependencies": {
     "@angablue/exe": "^2.1.1",
-    "@johnnymorganz/stylua": "^2.1.0",
+    "@johnnymorganz/stylua": "^2.6.0",
     "@yao-pkg/pkg": "^5.11.0",
-    "express": "^4.18.2",
+    "express": "^4.21.2",
     "node-hide-console-window": "^2.2.0",
     "patch-package": "^8.0.0",
     "trayicon": "^1.2.2"
