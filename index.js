@@ -18,39 +18,55 @@ const EnumList = {
   ["space_after_function_names"]: StyLua.SpaceAfterFunctionNames,
 };
 
-app.use(express.text());
+app.use(express.text({ limit: "10mb" }));
 app.post("/stylua", (req, res) => {
-  const input = req.body;
-  const Query = req.query.Config;
+  try {
+    const input = req.body;
+    if (typeof input !== "string") {
+      res.status(400).setHeader("Content-Type", "text/plain");
+      return res.send("Invalid request body: expected text/plain");
+    }
 
-  var Configs = StyLua.Config.new();
+    const Query = req.query.Config;
+    var Configs = StyLua.Config.new();
 
-  if (Query) {
-    const Parsed = JSON.parse(Query);
-    for (const [key, value] of Object.entries(Parsed)) {
-      if (EnumList[key]) {
-        Configs[key] = EnumList[key][value];
-      } else if (key == "sort_requires") {
-        Configs[key] = StyLua.SortRequiresConfig.new().set_enabled(value);
-      } else {
-        Configs[key] = value;
+    if (Query) {
+      let Parsed;
+      try {
+        Parsed = JSON.parse(Query);
+      } catch (jsonErr) {
+        res.status(400).setHeader("Content-Type", "text/plain");
+        return res.send(`Invalid JSON in Config query: ${jsonErr.message}`);
+      }
+
+      for (const [key, value] of Object.entries(Parsed)) {
+        if (EnumList[key]) {
+          Configs[key] = EnumList[key][value];
+        } else if (key == "sort_requires") {
+          Configs[key] = StyLua.SortRequiresConfig.new().set_enabled(value);
+        } else {
+          Configs[key] = value;
+        }
       }
     }
+
+    const output = StyLua.formatCode(
+      input,
+      Configs,
+      StyLua.Range.from_values(),
+      StyLua.OutputVerification.None
+    );
+
+    res.setHeader("Content-Type", "text/plain");
+    res.send(output);
+  } catch (err) {
+    res.status(400).setHeader("Content-Type", "text/plain");
+    res.send(`Formatting error: ${err.message || err}`);
   }
-
-  const output = StyLua.formatCode(
-    input,
-    Configs,
-    StyLua.Range.from_values(),
-    StyLua.OutputVerification.None
-  );
-
-  res.setHeader("Content-Type", "text/plain");
-  res.send(output);
 });
 
-app.listen(18259, () => {
-  console.log("Server started on port 18259");
+app.listen(18259, "127.0.0.1", () => {
+  console.log("Server started on 127.0.0.1:18259");
 });
 
 Tray.create(
@@ -66,3 +82,4 @@ Tray.create(
 );
 
 ConsoleWindow.hideConsole();
+
