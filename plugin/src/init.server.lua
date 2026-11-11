@@ -241,7 +241,9 @@ function formatter(script: LuaSourceContainer)
 			if preText then
 				warn("[StyLua] " .. preText:gsub("&#39;", "'"):gsub("<br>", "\n"))
 			else
-				warn("[StyLua] Request failed: " .. tostring(result.StatusCode) .. " " .. tostring(result.StatusMessage))
+				warn(
+					"[StyLua] Request failed: " .. tostring(result.StatusCode) .. " " .. tostring(result.StatusMessage)
+				)
 			end
 		else
 			warn("[StyLua] " .. tostring(body))
@@ -293,4 +295,3 @@ plugin.Unloading:Connect(function()
 		Connection = nil
 	end
 end)
-
